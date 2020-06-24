@@ -1,5 +1,7 @@
-function [Aout] = OBD(A)
+function [Fout] = OBD(F)
 %   overtone-based denoise
+Fout = F;
+A = abs(F);
 N = length(A);
 L = ceil(N/2);
 Mark = zeros(N, 1);
@@ -87,12 +89,13 @@ for P = 1:N
         end
     end
 end
+% finally, the denoise
+% use savage approach: set others to 0
 for i = 1:N
     if keep(i) ~= 1
-		A(i) = 0;
+		Fout(i) = 0;
     end
 end
-Aout = A;
 disp("Procedure complete.")
 end
 
